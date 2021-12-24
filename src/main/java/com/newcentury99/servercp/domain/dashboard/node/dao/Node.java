@@ -1,4 +1,4 @@
-package com.newcentury99.servercp.domain.dashboard.dao;
+package com.newcentury99.servercp.domain.dashboard.node.dao;
 
 import lombok.*;
 
@@ -10,26 +10,22 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Daemon {
-
+public class Node {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "daemon_id")
     private Long id;
 
     @Column(unique = true, nullable = false)
     private String name;
 
     @Column(nullable = false)
-    private String path;
+    private String host;
 
-    @Lob
     @Column(nullable = false)
-    private String dockerfile;
+    private String sshUsername;
 
-    @Lob
     @Column(nullable = false)
-    private String composefile;
+    private String sshPassword;
 
     @Column
     private String description;
