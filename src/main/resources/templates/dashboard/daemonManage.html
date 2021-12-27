@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NewCentury Server Control Panel</title>
+    <link rel="stylesheet" href="/static/css/foundation.css" />
+    <link rel="stylesheet" href="/static/css/dashboard/daemonManage.css" />
+</head>
+<body>
+    <div class="title-bar">
+        <div class="title-bar-left">
+            <span class="title-bar-title">NewCentury Server CP</span>
+        </div>
+        <div class="title-bar-right">
+        </div>
+    </div>
+    <div class="grid-container custom-daemon-manage">
+        <div class="grid-x align-center">
+            <h3 class="cell custom-daemon-manage-title" th:text="daemon.name">프로젝트 데몬 이름</h3>
+            <h5 class="cell" th:text="daemon.description"></h5>
+            <div class="cell">
+                <button class="button small" type="button">
+                    프로젝트 소개
+                </button>
+                <button class="button small" type="button" th:onclick="|location.href='@{/dashboard/daemon_editor(id=${daemon.id})}'|">
+                    프로젝트 데몬 정보 수정
+                </button>
+                <button class="alert button small" type="button">
+                    프로젝트 데몬 등록 해제
+                </button>
+            </div>
+            <div class="card cell">
+                <div class="card-divider">프로젝트 데몬 상세 정보</div>
+                <table class="stack custom-daemon-manage-update-table">
+                    <tbody>
+                        <tr>
+                            <td>바이너리 버전</td>
+                            <td th:text="daemon.version">0.0.0</td>
+                            <td>배포된 호스트</td>
+                            <td th:text="daemon.node.host">Unknown</td>
+                        </tr>
+                        <tr>
+                            <td>프로젝트 데몬 이미지명</td>
+                            <td>Unknown</td>
+                            <td>프로젝트 DB 이미지명</td>
+                            <td>Unknown</td>
+                        </tr>
+                        <tr>
+                            <td>프로젝트 데몬 컨테이너명</td>
+                            <td>Unknown</td>
+                            <td>프로젝트 DB 컨테이너명</td>
+                            <td>Unknown</td>
+                        </tr>
+                        <tr>
+                            <td>프로젝트 데몬 포트</td>
+                            <td>Unknown</td>
+                            <td>프로젝트 DB 포트</td>
+                            <td>Unknown</td>
+                        </tr>
+                        <tr>
+                            <td>프로젝트 루트 경로</td>
+                            <td th:text="daemon.projectPath">Unknown</td>
+                            <td>프로젝트 바이너리 경로</td>
+                            <td th:text="daemon.binaryPath">Unknown</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card cell">
+                <ul class="tabs" data-tabs id="manage-tabs">
+                    <li class="tabs-title is-active">
+                        <a href="#panel1" aria-selected="true">프로젝트 데몬 실행/중지</a>
+                    </li>
+                    <li class="tabs-title">
+                        <a data-tabs-target="panel2" href="#panel2">프로젝트 데몬 업데이트</a>
+                    </li>
+                    <li class="tabs-title">
+                        <a data-tabs-target="panel3" href="#panel3">프로젝트 데몬 로그</a>
+                    </li>
+                    <li class="tabs-title">
+                        <a data-tabs-target="panel4" href="#panel4">프로젝트 DB 관리</a>
+                    </li>
+                </ul>
+                <div class="tabs-content" data-tabs-content="manage-tabs">
+                    <div class="tabs-panel is-active" id="panel1">
+                        <div>
+                            <fieldset class="fieldset">
+                                <legend>현재 상태</legend>
+                                <h5 th:text="daemon.status">Unknown</h5>
+                            </fieldset>
+                        </div>
+                        <div>
+                            <button class="success button small" type="button">시작</button>
+                            <button class="alert button small" type="button">중지</button>
+                            <button class="button small" type="button">재시작</button>
+                        </div>
+                    </div>
+                    <div class="tabs-panel" id="panel2">
+                        <div>
+                            <label for="distribute-binary-version">업데이트(배포)할 바이너리 버전</label>
+                            <input id="distribute-binary-version" type="text" placeholder="업데이트(배포) 할 바이너리 버전 입력" />
+                        </div>
+                        <div>
+                            <label for="distribute-binary-file">업데이트(배포)할 바이너리 파일</label>
+                            <input id="distribute-binary-file" type="file" />
+                        </div>
+                        <div>
+                            <label for="composefile">컴포즈 파일 편집 (docker-compose.yml)</label>
+                            <textarea id="composefile" placeholder="컴포즈 파일 내용" th:text="daemon.composefile"></textarea>
+                        </div>
+                        <div>
+                            <label for="dockerfile">도커 파일 편집 (.Dockerfile)</label>
+                            <textarea id="dockerfile" placeholder="도커 파일 내용" th:text="daemon.dockerfile"></textarea>
+                        </div>
+                        <button class="button small" type="button">데몬 업데이트</button>
+                    </div>
+                    <div class="tabs-panel" id="panel3">
+                        <table class="stack custom-daemon-log-table">
+                            <thead>
+                                <tr>
+                                    <th>심각도</th>
+                                    <th>내용</th>
+                                    <th>일시</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3">준비중인 기능입니다.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="button small">컨테이너 로그 다운로드</button>
+                    </div>
+                    <div class="tabs-panel" id="panel4">
+                        <fieldset class="fieldset">
+                            <legend>프로젝트 DB 초기화</legend>
+                            <h5>준비중인 기능입니다.</h5>
+                        </fieldset>
+                        <fieldset class="fieldset">
+                            <legend>프로젝트 DB 백업(DLL 덤핑)</legend>
+                            <h5>준비중인 기능입니다.</h5>
+                        </fieldset>
+                        <fieldset class="fieldset">
+                            <legend>프로젝트 DB 복원(DLL 로드)</legend>
+                            <h5>준비중인 기능입니다.</h5>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/vendor/jquery.js"></script>
+    <script src="/static/js/vendor/what-input.js"></script>
+    <script src="/static/js/vendor/foundation.min.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
+</body>
+</html>

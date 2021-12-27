@@ -1,0 +1,12 @@
+.custom-daemon-manage {
+    margin-bottom: 50px;
+}
+.custom-daemon-manage-title {
+    margin-top: 25px;
+}
+.custom-daemon-manage-table > tbody > tr > td:nth-child(2n - 1) {
+    width: 200px;
+}
+.custom-daemon-manage-table > tbody > tr > td:nth-child(2) {
+    border-right: 1px solid #e6e6e6;
+}

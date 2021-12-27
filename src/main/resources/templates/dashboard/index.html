@@ -1,39 +1,55 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-<!--    <link th:href="@{/css/index.css}" rel="stylesheet" type="text/css">-->
-    <title>홈페이지</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NewCentury Server Control Panel</title>
+    <link rel="stylesheet" href="/static/css/foundation.css" />
+    <link rel="stylesheet" href="/static/css/dashboard/index.css" />
 </head>
 <body>
-    <h1>NewCentury's Server Command Post</h1>
-    <div>
-        <div th:each="node: ${nodeList}">
-            <div>
-                <div>노드 정보</div>
-                <div th:text="${node.name}"></div>
-                <div th:text="${node.host}"></div>
-                <div th:text="${node.description}"></div>
+    <div class="title-bar">
+        <div class="title-bar-left">
+            <span class="title-bar-title">NewCentury Server CP</span>
+        </div>
+        <div class="title-bar-right">
+        </div>
+    </div>
+    <div class="grid-container">
+        <div class="grid-x align-center">
+            <div class="cell">
+                <h1 class="text-center custom-daemon-title">NewCentury Server CP</h1>
+                <h3 class="text-center custom-daemon-subtitle">NewCentury 서버 관리자 페이지에 오신 것을 환영합니다!</h3>
             </div>
-            <div>
-                <div>노드에서 호스팅 중인 프로젝트 데몬 목록</div>
-                <div th:each="daemon: ${daemonList}">
-                    <div th:text="${daemon.name}"></div>
-                    <div th:text="${daemon.description}"></div>
-                    <div th:text="${daemon.version}"></div>
-                    <div th:text="${daemon.status}"></div>
-                    <div>
-                        <button th:onclick="|location.href='@{/distribute}'|">배포 관리</button>
-                    </div>
-                    <div>
-                        <button th:onclick="|location.href='@{/dashboard/daemon_detail(id=${daemon.id})}'|">세부 정보</button>
-                    </div>
+            <div class="card cell small-6 custom-daemon-login">
+                <div class="card-divider">
+                    System Login
                 </div>
-                <div>
-                    <button th:onclick="|location.href='@{/dashboard/daemon_editor}'|">신규 프로젝트 데몬 등록</button>
+                <div class="card-section">
+                    <div>
+                        <label>Username
+                            <input type="text" placeholder="Username">
+                        </label>
+                    </div>
+                    <div>
+                        <label>Password
+                            <input type="text" placeholder="Password">
+                        </label>
+                    </div>
+                    <div>
+                        <button class="button expanded custom-daemon-login-btn" type="button" onclick="">Login</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="/static/js/vendor/jquery.js"></script>
+    <script src="/static/js/vendor/what-input.js"></script>
+    <script src="/static/js/vendor/foundation.min.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
 </body>
 </html>

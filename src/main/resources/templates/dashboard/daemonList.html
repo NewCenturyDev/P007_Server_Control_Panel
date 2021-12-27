@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NewCentury Server Control Panel</title>
+    <link rel="stylesheet" href="/static/css/foundation.css" />
+    <link rel="stylesheet" href="/static/css/dashboard/daemonList.css" />
+</head>
+<body>
+    <div class="title-bar">
+        <div class="title-bar-left">
+            <span class="title-bar-title">NewCentury Server CP</span>
+        </div>
+        <div class="title-bar-right">
+        </div>
+    </div>
+    <div class="grid-container custom-daemon-list">
+        <div class="grid-x align-center">
+            <div class="cell">
+                <h1 class="text-center">NewCentury's Server Control Panel</h1>
+            </div>
+            <div class="cell callout primary">
+                <h5>NewCentury Server 노드 정보</h5>
+                <div>Host: 220.85.251.6</div>
+                <div>User: admin</div>
+                <div>Port: 21(FTP) / 22(SSH/SFTP) / 23(Telnet)</div>
+                <div>O/S: CentOS 7</div>
+                <div>Description: NewCentury99's Primary Personal Server for Development</div>
+            </div>
+            <div class="cell">
+                <h5 class="text-center">노드에서 호스팅 중인 프로젝트 데몬 목록</h5>
+            </div>
+            <table class="stack custom-daemon-list-table" th:each="daemon: ${daemonList}">
+                <thead>
+                    <tr>
+                        <th class="text-center">프로젝트(데몬)명</th>
+                        <th class="text-center">프로젝트(데몬)설명</th>
+                        <th class="text-center">버전</th>
+                        <th class="text-center">상태</th>
+                        <th class="text-center">개요</th>
+                        <th class="text-center">관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${daemon.name}">프로젝트 명칭</td>
+                        <td th:text="${daemon.description}">프로젝트 설명</td>
+                        <td th:text="${daemon.version}">0.0.0</td>
+                        <td th:text="${daemon.status}">Unknown</td>
+                        <td class="text-center">
+                            <a th:href="@{${daemon.portfolio}}">개요</a>
+                        </td>
+                        <td class="text-center">
+                            <a th:href="@{/dashboard/daemon_manage(id=${daemon.id})}">관리</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="cell small-10"></div>
+            <button class="button cell small-2" type="button"
+                    th:onclick="|location.href='@{/dashboard/daemon_editor}'|">
+                신규 프로젝트 데몬 등록
+            </button>
+        </div>
+    </div>
+
+    <script src="/static/js/vendor/jquery.js"></script>
+    <script src="/static/js/vendor/what-input.js"></script>
+    <script src="/static/js/vendor/foundation.min.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
+</body>
+</html>

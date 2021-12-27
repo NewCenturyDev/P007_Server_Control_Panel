@@ -1,0 +1,18 @@
+.custom-daemon-list {
+    margin-bottom: 50px;
+}
+.custom-daemon-list-table > thead > tr > th:nth-child(1){
+    width: 300px;
+}
+.custom-daemon-list-table > thead > tr > th:nth-child(3){
+    width: 50px;
+}
+.custom-daemon-list-table > thead > tr > th:nth-child(4){
+    width: 150px;
+}
+.custom-daemon-list-table > thead > tr > th:nth-child(5){
+    width: 50px;
+}
+.custom-daemon-list-table > thead > tr > th:nth-child(6) {
+    width: 50px;
+}

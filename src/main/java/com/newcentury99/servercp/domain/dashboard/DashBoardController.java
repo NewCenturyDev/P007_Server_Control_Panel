@@ -27,12 +27,12 @@ public class DashBoardController {
     public String mainView(Model model) {
         List<Node> nodeList = nodeService.fetchNodeList();
         model.addAttribute("nodeList", nodeList);
-        return "dashboard/index.html";
+        return "dashboard/daemonList.html";
     }
 
-    @GetMapping("/dashboard/daemon_detail")
-    public String daemonDetailView(Model model) {
-        return "dashboard/daemonDetail.html";
+    @GetMapping("/dashboard/daemon_manage")
+    public String daemonManageView(Model model) {
+        return "dashboard/daemonManage.html";
     }
 
     @GetMapping("/dashboard/daemon_editor")
