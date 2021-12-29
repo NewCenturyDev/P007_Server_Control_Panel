@@ -1,55 +1,95 @@
 package com.newcentury99.servercp.domain.dashboard.daemon;
 
+import com.jcraft.jsch.*;
 import com.newcentury99.servercp.domain.dashboard.daemon.dao.Daemon;
 import com.newcentury99.servercp.domain.dashboard.daemon.dao.DaemonRepository;
 import com.newcentury99.servercp.domain.dashboard.daemon.dto.CreateDaemonReqDto;
 import com.newcentury99.servercp.domain.dashboard.daemon.dto.DeleteDaemonReqDto;
 import com.newcentury99.servercp.domain.dashboard.daemon.dto.UpdateDaemonReqDto;
-import com.newcentury99.servercp.domain.dashboard.node.NodeService;
-import com.newcentury99.servercp.domain.dashboard.node.dao.Node;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class DaemonService {
     private final DaemonRepository daemonRepository;
-    private final NodeService nodeService;
 
     // Create
     @Transactional
-    public void createDaemon(CreateDaemonReqDto reqDto) throws Exception {
-        Node distributedNode = nodeService.fetchNodeById(reqDto.getNodeId());
-
+    public void createDaemon(CreateDaemonReqDto reqDto) {
         Daemon newDaemon = Daemon.builder()
                 .name(reqDto.getName())
-                .node(distributedNode)
-                .technology(reqDto.getTechnology())
                 .version(reqDto.getVersion())
+                .technology(reqDto.getTechnology())
+                .imageName(reqDto.getImageName())
+                .containerName(reqDto.getContainerName())
+                .port(reqDto.getPort())
                 .projectPath(reqDto.getProjectPath())
                 .binaryPath(reqDto.getBinaryPath())
                 .dockerfile(reqDto.getDockerfile())
                 .composefile(reqDto.getComposefile())
                 .description(reqDto.getDescription())
+                .portfolioUrl(reqDto.getPortfolioUrl())
                 .build();
 
         daemonRepository.save(newDaemon);
     }
 
     // Read
-    public List<Daemon> fetchDaemonByNode(Long nodeId) throws Exception {
-        List<Daemon> daemonList = daemonRepository.findByNode_Id(nodeId);
-        if (daemonList.isEmpty()) {
-            throw new Exception("temp: no id");
-        }
-        return daemonList;
+    public List<Daemon> fetchDaemonList() {
+        return daemonRepository.findAllByOrderByIdAsc();
     }
     public Daemon fetchDaemonById(Long daemonId) throws Exception {
         return daemonRepository.findById(daemonId)
                 .orElseThrow(() -> new Exception("temp: no id"));
+    }
+    public String fetchDaemonLogById(Long daemonId) throws Exception {
+        Daemon targetDaemon = this.fetchDaemonById(daemonId);
+        String sshQueryScript = String.format("docker logs %s", targetDaemon.getContainerName());
+        String host = "220.85.251.6";
+        int port = 22;
+        String username = "";
+        String password = "";
+
+        System.out.println("==> Connecting to" + host);
+        Session session = null;
+        ChannelExec channelExec = null;
+        ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
+        String dockerLog = "표시할 로그가 없습니다.";
+
+        try {
+            // 채널 생성.
+            session = new JSch().getSession(username, host, port);
+            session.setPassword(password);
+            session.setConfig("StrictHostKeyChecking", "no");
+            session.connect();
+
+            channelExec = (ChannelExec) session.openChannel("exec");
+            channelExec.setCommand(sshQueryScript);
+
+            channelExec.setOutputStream(resultStream);
+            channelExec.connect();
+
+            while (channelExec.isConnected()) {
+                Thread.sleep(50);
+            }
+
+            dockerLog = resultStream.toString();
+            System.out.println(dockerLog);
+        } finally {
+            if (session != null) {
+                session.disconnect();
+            }
+            if (channelExec != null) {
+                channelExec.disconnect();
+            }
+        }
+        return dockerLog;
     }
 
     // Update
@@ -57,10 +97,6 @@ public class DaemonService {
         Daemon targetDaemon = daemonRepository.findById(reqDto.getId())
                 .orElseThrow(() -> new Exception("temp: no id"));
 
-        if (!reqDto.getNodeId().equals(targetDaemon.getNode().getId())) {
-            Node newDistributedNode = nodeService.fetchNodeById(reqDto.getNodeId());
-            targetDaemon.setNode(newDistributedNode);
-        }
         if (!reqDto.getName().equals(targetDaemon.getName())) {
             targetDaemon.setName(reqDto.getName());
         }
@@ -69,6 +105,15 @@ public class DaemonService {
         }
         if (!reqDto.getTechnology().equals(targetDaemon.getTechnology())) {
             targetDaemon.setTechnology(reqDto.getTechnology());
+        }
+        if (!reqDto.getImageName().equals(targetDaemon.getImageName())) {
+            targetDaemon.setImageName(reqDto.getImageName());
+        }
+        if (!reqDto.getContainerName().equals(targetDaemon.getContainerName())) {
+            targetDaemon.setContainerName(reqDto.getContainerName());
+        }
+        if (!reqDto.getPort().equals(targetDaemon.getPort())) {
+            targetDaemon.setPort(reqDto.getPort());
         }
         if (!reqDto.getProjectPath().equals(targetDaemon.getProjectPath())) {
             targetDaemon.setProjectPath(reqDto.getProjectPath());
@@ -84,6 +129,9 @@ public class DaemonService {
         }
         if (!reqDto.getDescription().equals(targetDaemon.getDescription())) {
             targetDaemon.setDescription(reqDto.getDescription());
+        }
+        if (!reqDto.getPortfolioUrl().equals(targetDaemon.getPortfolioUrl())) {
+            targetDaemon.setPortfolioUrl(reqDto.getPortfolioUrl());
         }
 
         daemonRepository.save(targetDaemon);

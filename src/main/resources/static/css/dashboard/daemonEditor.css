@@ -1,11 +1,12 @@
 .custom-daemon-editor {
     margin-bottom: 50px;
 }
-.custom-daemon-editor > div > div > textarea {
+.custom-daemon-editor-dockerfile > textarea,
+.custom-daemon-editor-composefile > textarea {
     height: 500px;
     resize: none;
     overflow-y: scroll;
 }
-.custom-daemon-editor > div > div:nth-child(13) > textarea {
+.custom-daemon-editor-description > textarea {
     height: 150px;
 }

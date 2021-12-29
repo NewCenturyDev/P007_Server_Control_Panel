@@ -10,3 +10,9 @@
 .custom-daemon-manage-table > tbody > tr > td:nth-child(2) {
     border-right: 1px solid #e6e6e6;
 }
+
+#daemon-docker-log {
+    height: 500px;
+    resize: none;
+    overflow-y: scroll;
+}

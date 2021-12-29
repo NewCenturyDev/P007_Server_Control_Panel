@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ServerCommandPostApplication {
+public class ServerControlPanelApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ServerCommandPostApplication.class, args);
+        SpringApplication.run(ServerControlPanelApplication.class, args);
     }
 
 }

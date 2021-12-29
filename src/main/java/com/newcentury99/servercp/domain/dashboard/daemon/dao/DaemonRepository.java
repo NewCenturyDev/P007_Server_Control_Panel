@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface DaemonRepository extends JpaRepository<Daemon, Long> {
     Optional<Daemon> findById(Long id);
-    List<Daemon> findByNode_Id(Long nodeId);
+    List<Daemon> findAllByOrderByIdAsc();
 }

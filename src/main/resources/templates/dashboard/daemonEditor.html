@@ -18,57 +18,73 @@
     </div>
     <div class="grid-container custom-daemon-editor">
         <div class="gird-x align-center">
-            <h3 class="cell">프로젝트 데몬 등록</h3>
-            <h3 class="cell">프로젝트 데몬 수정</h3>
+            <h3 th:if="${isNewDaemon}" class="cell">프로젝트 데몬 등록</h3>
+            <h3 th:if="!${isNewDaemon}" class="cell">프로젝트 데몬 수정</h3>
             <div>
                 <label for="daemon-name">프로젝트 데몬 이름</label>
-                <input id="daemon-name" type="text" placeholder="프로젝트명" />
+                <input id="daemon-name" type="text" th:value="${daemon.name}" placeholder="프로젝트명" />
             </div>
             <div>
                 <label for="daemon-version">프로젝트 데몬 버전</label>
-                <input id="daemon-version" type="text" placeholder="ex:) 1.0.0" />
+                <input id="daemon-version" type="text" th:value="${daemon.version}" placeholder="ex:) 1.0.0" />
             </div>
             <div>
                 <label for="daemon-technology">프로젝트 데몬 종류 (백엔드 프레임워크 종류)</label>
-                <input id="daemon-technology" type="text" placeholder="ex:) Java Spring Boot, Python Flask, etc.." />
+                <input id="daemon-technology" type="text" th:value="${daemon.technology}" placeholder="ex:) Java Spring Boot, Python Flask, etc.." />
             </div>
             <div>
                 <label for="daemon-image-name">프로젝트 데몬 이미지 이름</label>
-                <input id="daemon-image-name" type="text" placeholder="도커 이미지명" />
+                <input id="daemon-image-name" type="text" th:value="${daemon.imageName}" placeholder="도커 이미지명" />
             </div>
             <div>
                 <label for="daemon-container-name">프로젝트 데몬 컨테이너 이름</label>
-                <input id="daemon-container-name" type="text" placeholder="도커 컨테이너명" />
+                <input id="daemon-container-name" type="text" th:value="${daemon.containerName}" placeholder="도커 컨테이너명" />
             </div>
             <div>
                 <label for="daemon-port">프로젝트 데몬 포트</label>
-                <input id="daemon-port" type="text" placeholder="데몬 접근 포트" />
+                <input id="daemon-port" type="text" th:value="${daemon.port}" placeholder="데몬 접근 포트" />
             </div>
             <div>
                 <label for="daemon-projectPath">프로젝트 리포지토리 루트 경로</label>
-                <input id="daemon-projectPath" type="text" placeholder="git clone 받은 경로를 입력하시면 됩니다." />
+                <input id="daemon-projectPath" type="text" th:value="${daemon.projectPath}" placeholder="git clone 받은 경로를 입력하시면 됩니다." />
             </div>
             <div>
                 <label for="daemon-binaryPath">프로젝트 바이너리 경로</label>
-                <input id="daemon-binaryPath" type="text" placeholder="빌드한 바이너리를 업로드할 경로를 입력하시면 됩니다." />
+                <input id="daemon-binaryPath" type="text" th:value="${daemon.binaryPath}" placeholder="빌드한 바이너리를 업로드할 경로를 입력하시면 됩니다." />
             </div>
-            <div class="custom-daemon-editor-dockerfile-textarea">
+            <div class="custom-daemon-editor-dockerfile">
                 <label for="daemon-dockerfile">프로젝트 Dockerfile 설정파일 내용</label>
-                <textarea id="daemon-dockerfile" type="text" placeholder="Dockerfile 스크립트를 입력하세요."></textarea>
+                <textarea id="daemon-dockerfile" type="text" th:text="${daemon.dockerfile}" placeholder="Dockerfile 스크립트를 입력하세요."></textarea>
             </div>
-            <div class="custom-daemon-editor-composefile-textarea">
+            <div class="custom-daemon-editor-composefile">
                 <label for="daemon-composefile">프로젝트 docker-compose.yml 설정파일 내용</label>
-                <textarea id="daemon-composefile" type="text" placeholder="docker-compose.yml 스크립트를 입력하세요."></textarea>
+                <textarea id="daemon-composefile" type="text" th:text="${daemon.composefile}" placeholder="docker-compose.yml 스크립트를 입력하세요."></textarea>
             </div>
-            <div class="custom-daemon-editor-dockerfile-textarea">
+            <div class="custom-daemon-editor-description">
                 <label for="daemon-description">프로젝트 백엔드 데몬 설명</label>
-                <textarea id="daemon-description" type="text" placeholder="프로젝트 백엔드 데몬 설명을 입력하세요."></textarea>
+                <textarea id="daemon-description" type="text" th:text="${daemon.description}" placeholder="프로젝트 백엔드 데몬 설명을 입력하세요."></textarea>
             </div>
             <div>
-                <button class="button small" type="button">프로젝트 데몬 등록</button>
-                <button class="button small" type="button">프로젝트 데몬 수정</button>
+                <label for="daemon-portfolioUrl">프로젝트 포트폴리오 URL</label>
+                <input id="daemon-portfolioUrl" type="text" th:value="${daemon.portfolioUrl}" placeholder="프로젝트 소개 페이지 URL을 입력하세요." />
+            </div>
+            <div>
+                <button th:if="${isNewDaemon}" id="create-btn" class="button small" type="button" onclick="createDaemon()">
+                    프로젝트 데몬 등록
+                </button>
+                <button th:if="${!isNewDaemon}" id="update-btn" class="button small" type="button" th:onclick="|updateDaemon(${daemon.id})|">
+                    프로젝트 데몬 수정
+                </button>
             </div>
         </div>
     </div>
+
+    <script src="/static/js/vendor/jquery.js"></script>
+    <script src="/static/js/vendor/what-input.js"></script>
+    <script src="/static/js/vendor/foundation.min.js"></script>
+    <script src="/static/js/dashboard/daemonEditor.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
 </body>
 </html>

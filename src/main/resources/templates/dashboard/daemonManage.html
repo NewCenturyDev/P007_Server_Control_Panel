@@ -18,16 +18,16 @@
     </div>
     <div class="grid-container custom-daemon-manage">
         <div class="grid-x align-center">
-            <h3 class="cell custom-daemon-manage-title" th:text="daemon.name">프로젝트 데몬 이름</h3>
-            <h5 class="cell" th:text="daemon.description"></h5>
+            <h3 class="cell custom-daemon-manage-title" th:text="${daemon.name}">프로젝트 데몬 이름</h3>
+            <h5 class="cell" th:text="${daemon.description}"></h5>
             <div class="cell">
-                <button class="button small" type="button">
+                <button class="button small" type="button" th:onclick="|window.open('@{${daemon.portfolioUrl}}')|">
                     프로젝트 소개
                 </button>
                 <button class="button small" type="button" th:onclick="|location.href='@{/dashboard/daemon_editor(id=${daemon.id})}'|">
                     프로젝트 데몬 정보 수정
                 </button>
-                <button class="alert button small" type="button">
+                <button class="alert button small" type="button" th:onclick="|deleteDaemon(${daemon.id})|">
                     프로젝트 데몬 등록 해제
                 </button>
             </div>
@@ -37,33 +37,33 @@
                     <tbody>
                         <tr>
                             <td>바이너리 버전</td>
-                            <td th:text="daemon.version">0.0.0</td>
-                            <td>배포된 호스트</td>
-                            <td th:text="daemon.node.host">Unknown</td>
+                            <td th:text="${daemon.version}">0.0.0</td>
+                            <td>기반 프레임워크</td>
+                            <td th:text="${daemon.technology}">Unknown</td>
                         </tr>
                         <tr>
                             <td>프로젝트 데몬 이미지명</td>
-                            <td>Unknown</td>
+                            <td th:text="${daemon.imageName}">Unknown</td>
                             <td>프로젝트 DB 이미지명</td>
                             <td>Unknown</td>
                         </tr>
                         <tr>
                             <td>프로젝트 데몬 컨테이너명</td>
-                            <td>Unknown</td>
+                            <td th:text="${daemon.containerName}">Unknown</td>
                             <td>프로젝트 DB 컨테이너명</td>
                             <td>Unknown</td>
                         </tr>
                         <tr>
                             <td>프로젝트 데몬 포트</td>
-                            <td>Unknown</td>
+                            <td th:text="${daemon.port}">Unknown</td>
                             <td>프로젝트 DB 포트</td>
                             <td>Unknown</td>
                         </tr>
                         <tr>
                             <td>프로젝트 루트 경로</td>
-                            <td th:text="daemon.projectPath">Unknown</td>
+                            <td th:text="${daemon.projectPath}">Unknown</td>
                             <td>프로젝트 바이너리 경로</td>
-                            <td th:text="daemon.binaryPath">Unknown</td>
+                            <td th:text="${daemon.binaryPath}">Unknown</td>
                         </tr>
                     </tbody>
                 </table>
@@ -88,7 +88,7 @@
                         <div>
                             <fieldset class="fieldset">
                                 <legend>현재 상태</legend>
-                                <h5 th:text="daemon.status">Unknown</h5>
+                                <h5>Unknown</h5>
                             </fieldset>
                         </div>
                         <div>
@@ -108,29 +108,17 @@
                         </div>
                         <div>
                             <label for="composefile">컴포즈 파일 편집 (docker-compose.yml)</label>
-                            <textarea id="composefile" placeholder="컴포즈 파일 내용" th:text="daemon.composefile"></textarea>
+                            <textarea id="composefile" placeholder="컴포즈 파일 내용" th:text="${daemon.composefile}"></textarea>
                         </div>
                         <div>
                             <label for="dockerfile">도커 파일 편집 (.Dockerfile)</label>
-                            <textarea id="dockerfile" placeholder="도커 파일 내용" th:text="daemon.dockerfile"></textarea>
+                            <textarea id="dockerfile" placeholder="도커 파일 내용" th:text="${daemon.dockerfile}"></textarea>
                         </div>
                         <button class="button small" type="button">데몬 업데이트</button>
                     </div>
                     <div class="tabs-panel" id="panel3">
-                        <table class="stack custom-daemon-log-table">
-                            <thead>
-                                <tr>
-                                    <th>심각도</th>
-                                    <th>내용</th>
-                                    <th>일시</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="3">준비중인 기능입니다.</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <label for="daemon-docker-log">데몬 도커 컨테이너 로그</label>
+                        <textarea disabled id="daemon-docker-log" type="text" th:text="${daemonLog}"></textarea>
                         <button class="button small">컨테이너 로그 다운로드</button>
                     </div>
                     <div class="tabs-panel" id="panel4">
@@ -155,6 +143,7 @@
     <script src="/static/js/vendor/jquery.js"></script>
     <script src="/static/js/vendor/what-input.js"></script>
     <script src="/static/js/vendor/foundation.min.js"></script>
+    <script src="/static/js/dashboard/daemonManage.js"></script>
     <script>
         $(document).foundation();
     </script>

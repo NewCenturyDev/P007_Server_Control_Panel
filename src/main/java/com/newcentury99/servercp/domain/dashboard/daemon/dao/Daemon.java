@@ -1,9 +1,6 @@
 package com.newcentury99.servercp.domain.dashboard.daemon.dao;
 
-import com.newcentury99.servercp.domain.dashboard.node.dao.Node;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -19,19 +16,23 @@ public class Daemon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "daemon_id")
-    private Node node;
-
     @Column(unique = true, nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String version;
 
     @Column(nullable = false)
     private String technology;
 
     @Column(nullable = false)
-    private String version;
+    private String imageName;
+
+    @Column(nullable = false)
+    private String containerName;
+
+    @Column(nullable = false)
+    private String port;
 
     @Column(nullable = false)
     private String projectPath;
@@ -49,4 +50,6 @@ public class Daemon {
 
     @Column
     private String description;
+    @Column
+    private String portfolioUrl;
 }
