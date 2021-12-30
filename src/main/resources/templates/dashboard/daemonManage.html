@@ -106,11 +106,11 @@
                             <label for="distribute-binary-file">업데이트(배포)할 바이너리 파일</label>
                             <input id="distribute-binary-file" type="file" />
                         </div>
-                        <div>
+                        <div class="custom-daemon-manage-composefile">
                             <label for="composefile">컴포즈 파일 편집 (docker-compose.yml)</label>
                             <textarea id="composefile" placeholder="컴포즈 파일 내용" th:text="${daemon.composefile}"></textarea>
                         </div>
-                        <div>
+                        <div class="custom-daemon-manage-dockerfile">
                             <label for="dockerfile">도커 파일 편집 (.Dockerfile)</label>
                             <textarea id="dockerfile" placeholder="도커 파일 내용" th:text="${daemon.dockerfile}"></textarea>
                         </div>

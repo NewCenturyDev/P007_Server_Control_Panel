@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -60,6 +62,8 @@ public class DaemonService {
         Session session = null;
         ChannelExec channelExec = null;
         ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
+        StringBuilder outputBuffer = new StringBuilder();
+        StringBuilder errorBuffer = new StringBuilder();
         String dockerLog = "표시할 로그가 없습니다.";
 
         try {
@@ -69,18 +73,15 @@ public class DaemonService {
             session.setConfig("StrictHostKeyChecking", "no");
             session.connect();
 
-            channelExec = (ChannelExec) session.openChannel("exec");
+            channelExec = (ChannelExec)session.openChannel("exec");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            channelExec.setOutputStream(baos);
             channelExec.setCommand(sshQueryScript);
-
-            channelExec.setOutputStream(resultStream);
             channelExec.connect();
 
-            while (channelExec.isConnected()) {
-                Thread.sleep(50);
-            }
+            Thread.sleep(1000);
 
-            dockerLog = resultStream.toString();
-            System.out.println(dockerLog);
+            dockerLog = baos.toString();
         } finally {
             if (session != null) {
                 session.disconnect();

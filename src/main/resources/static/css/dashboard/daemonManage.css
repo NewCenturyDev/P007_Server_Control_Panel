@@ -11,6 +11,13 @@
     border-right: 1px solid #e6e6e6;
 }
 
+.custom-daemon-manage-composefile > textarea,
+.custom-daemon-manage-dockerfile > textarea {
+    height: 500px;
+    resize: none;
+    overflow-y: scroll;
+}
+
 #daemon-docker-log {
     height: 500px;
     resize: none;
