@@ -11,7 +11,9 @@
 <body>
     <div class="title-bar">
         <div class="title-bar-left">
-            <span class="title-bar-title">NewCentury Server CP</span>
+            <span class="title-bar-title custom-daemon-editor-main-title" onclick="location.href = location.origin + '/dashboard'">
+                NewCentury Server CP
+            </span>
         </div>
         <div class="title-bar-right">
         </div>
@@ -66,7 +68,7 @@
             </div>
             <div>
                 <label for="daemon-portfolioUrl">프로젝트 포트폴리오 URL</label>
-                <input id="daemon-portfolioUrl" type="text" th:value="${daemon.portfolioUrl}" placeholder="프로젝트 소개 페이지 URL을 입력하세요." />
+                <input id="daemon-portfolioUrl" type="text" th:value="${daemon.portfolioUrl}" placeholder="프로젝트 소개 페이지 URL 을 입력하세요." />
             </div>
             <div>
                 <button th:if="${isNewDaemon}" id="create-btn" class="button small" type="button" onclick="createDaemon()">
@@ -74,6 +76,13 @@
                 </button>
                 <button th:if="${!isNewDaemon}" id="update-btn" class="button small" type="button" th:onclick="|updateDaemon(${daemon.id})|">
                     프로젝트 데몬 수정
+                </button>
+                <button th:if="${isNewDaemon}" class="alert button small" type="button" onclick="location.href = location.origin + '/dashboard'">
+                    취소
+                </button>
+                <button th:if="${!isNewDaemon}" class="alert button small" type="button"
+                        onclick="history.back()">
+                    취소
                 </button>
             </div>
         </div>

@@ -1,4 +1,4 @@
-package com.newcentury99.servercp.global.config;
+package com.newcentury99.servercp.global.generalconfig;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;

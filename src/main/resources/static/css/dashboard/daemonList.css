@@ -1,6 +1,9 @@
 .custom-daemon-list {
     margin-bottom: 50px;
 }
+.custom-daemon-list-main-title {
+    cursor: pointer;
+}
 .custom-daemon-list-table > thead > tr > th:nth-child(1){
     width: 300px;
 }

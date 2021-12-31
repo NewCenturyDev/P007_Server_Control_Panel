@@ -11,7 +11,9 @@
 <body>
     <div class="title-bar">
         <div class="title-bar-left">
-            <span class="title-bar-title">NewCentury Server CP</span>
+            <span class="title-bar-title custom-daemon-manage-main-title" onclick="location.href = location.origin + '/dashboard'">
+                NewCentury Server CP
+            </span>
         </div>
         <div class="title-bar-right">
         </div>
@@ -88,13 +90,16 @@
                         <div>
                             <fieldset class="fieldset">
                                 <legend>현재 상태</legend>
-                                <h5>Unknown</h5>
+                                <h5 id="daemon-status">Querying Daemon Status...</h5>
                             </fieldset>
                         </div>
                         <div>
-                            <button class="success button small" type="button">시작</button>
-                            <button class="alert button small" type="button">중지</button>
-                            <button class="button small" type="button">재시작</button>
+                            <button class="success button small" type="button"
+                                    onclick="changeDaemonState(daemonId, 'start')">시작</button>
+                            <button class="alert button small" type="button"
+                                    onclick="changeDaemonState(daemonId, 'stop')">중지</button>
+                            <button class="button small" type="button"
+                                    onclick="changeDaemonState(daemonId, 'restart')">재시작</button>
                         </div>
                     </div>
                     <div class="tabs-panel" id="panel2">
@@ -118,7 +123,7 @@
                     </div>
                     <div class="tabs-panel" id="panel3">
                         <label for="daemon-docker-log">데몬 도커 컨테이너 로그</label>
-                        <textarea disabled id="daemon-docker-log" type="text" th:text="${daemonLog}"></textarea>
+                        <textarea disabled id="daemon-docker-log" type="text">로그를 불러오는 중입니다</textarea>
                         <button class="button small">컨테이너 로그 다운로드</button>
                     </div>
                     <div class="tabs-panel" id="panel4">
@@ -146,6 +151,13 @@
     <script src="/static/js/dashboard/daemonManage.js"></script>
     <script>
         $(document).foundation();
+    </script>
+    <script th:inline="javascript">
+        const daemonId = [[${daemon.id}]];
+        $(document).ready(() => {
+            getDaemonStatus([[${daemon.id}]]);
+            getDaemonLogs([[${daemon.id}]]);
+        });
     </script>
 </body>
 </html>

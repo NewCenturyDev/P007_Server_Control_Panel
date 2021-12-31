@@ -1,4 +1,4 @@
-package com.newcentury99.servercp.global.config;
+package com.newcentury99.servercp.global.generalconfig;
 
 import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;

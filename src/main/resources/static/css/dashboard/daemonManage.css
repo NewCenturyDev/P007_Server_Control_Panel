@@ -1,6 +1,9 @@
 .custom-daemon-manage {
     margin-bottom: 50px;
 }
+.custom-daemon-manage-main-title {
+    cursor: pointer;
+}
 .custom-daemon-manage-title {
     margin-top: 25px;
 }

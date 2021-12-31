@@ -1,6 +1,9 @@
 .custom-daemon-editor {
     margin-bottom: 50px;
 }
+.custom-daemon-editor-main-title {
+    cursor: pointer;
+}
 .custom-daemon-editor-dockerfile > textarea,
 .custom-daemon-editor-composefile > textarea {
     height: 500px;

@@ -1,6 +1,5 @@
-package com.newcentury99.servercp.domain.dashboard.daemon;
+package com.newcentury99.servercp.domain.dashboard.daemon.service;
 
-import com.jcraft.jsch.*;
 import com.newcentury99.servercp.domain.dashboard.daemon.dao.Daemon;
 import com.newcentury99.servercp.domain.dashboard.daemon.dao.DaemonRepository;
 import com.newcentury99.servercp.domain.dashboard.daemon.dto.CreateDaemonReqDto;
@@ -10,15 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class DaemonService {
+public class DaemonCrudService {
     private final DaemonRepository daemonRepository;
 
     // Create
@@ -49,48 +44,6 @@ public class DaemonService {
     public Daemon fetchDaemonById(Long daemonId) throws Exception {
         return daemonRepository.findById(daemonId)
                 .orElseThrow(() -> new Exception("temp: no id"));
-    }
-    public String fetchDaemonLogById(Long daemonId) throws Exception {
-        Daemon targetDaemon = this.fetchDaemonById(daemonId);
-        String sshQueryScript = String.format("docker logs %s", targetDaemon.getContainerName());
-        String host = "220.85.251.6";
-        int port = 22;
-        String username = "";
-        String password = "";
-
-        System.out.println("==> Connecting to" + host);
-        Session session = null;
-        ChannelExec channelExec = null;
-        ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
-        StringBuilder outputBuffer = new StringBuilder();
-        StringBuilder errorBuffer = new StringBuilder();
-        String dockerLog = "표시할 로그가 없습니다.";
-
-        try {
-            // 채널 생성.
-            session = new JSch().getSession(username, host, port);
-            session.setPassword(password);
-            session.setConfig("StrictHostKeyChecking", "no");
-            session.connect();
-
-            channelExec = (ChannelExec)session.openChannel("exec");
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            channelExec.setOutputStream(baos);
-            channelExec.setCommand(sshQueryScript);
-            channelExec.connect();
-
-            Thread.sleep(1000);
-
-            dockerLog = baos.toString();
-        } finally {
-            if (session != null) {
-                session.disconnect();
-            }
-            if (channelExec != null) {
-                channelExec.disconnect();
-            }
-        }
-        return dockerLog;
     }
 
     // Update
