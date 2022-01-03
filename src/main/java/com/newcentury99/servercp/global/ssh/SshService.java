@@ -1,11 +1,12 @@
 package com.newcentury99.servercp.global.ssh;
 
 import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.Session;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayOutputStream;
+import java.io.*;
 import java.util.Properties;
 
 @AllArgsConstructor
@@ -45,5 +46,28 @@ public class SshService {
             }
         }
         return execOutputStream.toString();
+    }
+
+    public void uploadFileBySftp(InputStream fileUploadStream, String uploadPath, String filename) throws Exception {
+        Session session = null;
+        ChannelSftp channelSftp = null;
+
+        try {
+            session = sshConnector.getSshSession();
+            System.out.println("==> Open SFTP Connection to:" + session.getHost());
+            session.connect(CONN_TIMEOUT_10SEC);
+            channelSftp = (ChannelSftp) session.openChannel("sftp");
+            channelSftp.connect();
+            channelSftp.cd(uploadPath);
+            channelSftp.put(fileUploadStream, filename);
+            System.out.println("==> Uploaded : " + filename + " at " + session.getHost() + " | " + uploadPath);
+        } finally {
+            if (channelSftp != null) {
+                channelSftp.disconnect();
+            }
+            if (session != null) {
+                session.disconnect();
+            }
+        }
     }
 }

@@ -1,9 +1,13 @@
 package com.newcentury99.servercp.domain.dashboard.daemon.service;
 
 import com.newcentury99.servercp.domain.dashboard.daemon.dao.Daemon;
+import com.newcentury99.servercp.domain.dashboard.daemon.dto.UpdateDaemonReqDto;
+import com.newcentury99.servercp.domain.dashboard.daemon.dto.UpgradeDaemonReqDto;
 import com.newcentury99.servercp.global.ssh.SshService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @Service
@@ -45,6 +49,56 @@ public class DaemonManageService {
         );
 
         sshService.executeSshRemoteCommand(sshCommandScript);
+    }
+
+    private void uploadBinaryFile(MultipartFile uploadedBinary, String binaryPath) throws Exception {
+        String uploadPath = binaryPath;
+        if (binaryPath.charAt(0) == '~' && binaryPath.charAt(1) == '/') {
+            uploadPath = binaryPath.substring(2);
+        }
+        sshService.uploadFileBySftp(
+                uploadedBinary.getInputStream(),
+                uploadPath,
+                uploadedBinary.getOriginalFilename()
+        );
+    }
+
+    private void upgradeDockerfile(Daemon targetDaemon, String dockerfile) throws Exception {
+        String sshCommandScript = String.format(
+                "echo -e \"%s\" > %s", StringEscapeUtils.escapeJava(dockerfile), targetDaemon.getProjectPath() + "/Dockerfile"
+        );
+        sshService.executeSshRemoteCommand(sshCommandScript);
+    }
+
+    private void upgradeComposefile(Daemon targetDaemon, String composefile) throws Exception {
+        String sshCommandScript = String.format(
+                "echo -e \"%s\" > %s", StringEscapeUtils.escapeJava(composefile), targetDaemon.getProjectPath() + "/docker-compose.yml"
+        );
+        sshService.executeSshRemoteCommand(sshCommandScript);
+    }
+
+    private void deleteOldDaemonImage(Daemon targetDaemon) throws Exception {
+        String sshCommandScript = String.format(
+                "docker rmi %s", targetDaemon.getImageName()
+        );
+        sshService.executeSshRemoteCommand(sshCommandScript);
+    }
+
+    public void upgradeDaemon(UpgradeDaemonReqDto reqDto, MultipartFile uploadedBinary) throws Exception{
+        Daemon targetDaemon = daemonCrudService.fetchDaemonById(reqDto.getId());
+        UpdateDaemonReqDto upgradedDaemonDetailDto = new UpdateDaemonReqDto();
+
+        this.uploadBinaryFile(uploadedBinary, targetDaemon.getBinaryPath());
+        this.upgradeDockerfile(targetDaemon, reqDto.getDockerfile());
+        this.upgradeComposefile(targetDaemon, reqDto.getComposefile());
+        this.stopDaemon(targetDaemon.getId());
+        this.deleteOldDaemonImage(targetDaemon);
+        this.startDaemon(targetDaemon.getId());
+
+        targetDaemon.setVersion(reqDto.getVersion());
+        targetDaemon.setDockerfile(reqDto.getDockerfile());
+        targetDaemon.setComposefile(reqDto.getComposefile());
+        daemonCrudService.updateDaemonOnUpgrade(targetDaemon);
     }
 
     public String getDaemonLogById(Long daemonId) throws Exception {

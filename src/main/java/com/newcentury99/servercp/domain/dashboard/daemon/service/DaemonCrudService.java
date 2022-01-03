@@ -90,6 +90,9 @@ public class DaemonCrudService {
 
         daemonRepository.save(targetDaemon);
     }
+    public void updateDaemonOnUpgrade(Daemon targetDaemon) {
+        daemonRepository.save(targetDaemon);
+    }
 
     // Delete
     public void deleteDaemon(DeleteDaemonReqDto reqDto) throws Exception {

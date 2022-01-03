@@ -26,3 +26,10 @@
     resize: none;
     overflow-y: scroll;
 }
+
+#daemon-upgrade-blinker {
+    visibility: hidden;
+    font-size: 30px;
+    font-weight: bold;
+    color: #FF0000;
+}

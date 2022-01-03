@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
@@ -141,6 +142,19 @@ public class DaemonController {
         } catch (Exception e) {
             dtoMataData = new DtoMataData(false, e.getMessage());
             return ResponseEntity.status(400).body(new RestartDaemonResDto(dtoMataData));
+        }
+    }
+
+    @PostMapping("/dashboard/daemon/upgrade")
+    public ResponseEntity<?> upgradeDaemon(
+            @RequestPart(value = "json")UpgradeDaemonReqDto reqDto,
+            @RequestPart(value = "file")MultipartFile uploadedBinaryFile
+    ) {
+        try {
+            daemonManageService.upgradeDaemon(reqDto, uploadedBinaryFile);
+            return ResponseEntity.ok("ok");
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(e.getMessage());
         }
     }
 }

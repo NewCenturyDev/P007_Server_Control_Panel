@@ -112,14 +112,19 @@
                             <input id="distribute-binary-file" type="file" />
                         </div>
                         <div class="custom-daemon-manage-composefile">
-                            <label for="composefile">컴포즈 파일 편집 (docker-compose.yml)</label>
-                            <textarea id="composefile" placeholder="컴포즈 파일 내용" th:text="${daemon.composefile}"></textarea>
+                            <label for="distribute-binary-composefile">컴포즈 파일 편집 (docker-compose.yml)</label>
+                            <textarea id="distribute-binary-composefile" placeholder="컴포즈 파일 내용" th:text="${daemon.composefile}"></textarea>
                         </div>
                         <div class="custom-daemon-manage-dockerfile">
-                            <label for="dockerfile">도커 파일 편집 (.Dockerfile)</label>
-                            <textarea id="dockerfile" placeholder="도커 파일 내용" th:text="${daemon.dockerfile}"></textarea>
+                            <label for="distribute-binary-dockerfile">도커 파일 편집 (.Dockerfile)</label>
+                            <textarea id="distribute-binary-dockerfile" placeholder="도커 파일 내용" th:text="${daemon.dockerfile}"></textarea>
                         </div>
-                        <button class="button small" type="button">데몬 업데이트</button>
+                        <button class="button small" type="button" onclick="upgradeDaemon(daemonId)">
+                            데몬 업데이트
+                        </button>
+                        <div id="daemon-upgrade-blinker">
+                            데몬을 업그레이드 합니다 - 완료시까지 창을 종료하거나 조작하지 마십시오
+                        </div>
                     </div>
                     <div class="tabs-panel" id="panel3">
                         <label for="daemon-docker-log">데몬 도커 컨테이너 로그</label>
