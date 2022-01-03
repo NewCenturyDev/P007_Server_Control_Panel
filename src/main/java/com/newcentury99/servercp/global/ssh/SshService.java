@@ -12,7 +12,6 @@ import java.util.Properties;
 @Service
 public class SshService {
     final int CONN_TIMEOUT_10SEC = 10000;
-    final int CONN_THREAD_WAIT_1SEC = 1000;
     SshConnector sshConnector;
     Properties sshProperties;
 
@@ -31,8 +30,12 @@ public class SshService {
             channelExec.setCommand(sshCommandScript);
             System.out.println("==> Executing: " + sshCommandScript);
             channelExec.connect();
-
-            Thread.sleep(CONN_THREAD_WAIT_1SEC);
+            synchronized(this) {
+                while(!channelExec.isClosed()){
+                    this.wait(10);
+                }
+                this.notify();
+            }
         } finally {
             if (channelExec != null) {
                 channelExec.disconnect();

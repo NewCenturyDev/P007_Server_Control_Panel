@@ -5,10 +5,15 @@ import com.newcentury99.servercp.domain.dashboard.daemon.service.DaemonCrudServi
 import com.newcentury99.servercp.domain.dashboard.daemon.service.DaemonManageService;
 import com.newcentury99.servercp.global.dtometadata.DtoMataData;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 
 @RequiredArgsConstructor
 @RestController
@@ -61,6 +66,25 @@ public class DaemonController {
             return ResponseEntity.ok(new GetDaemonLogResDto(
                     dtoMataData, daemonManageService.getDaemonLogById(daemonId)
             ));
+        } catch (Exception e) {
+            dtoMataData = new DtoMataData(false, e.getMessage());
+            return ResponseEntity.status(400).body(new GetDaemonLogResDto(dtoMataData));
+        }
+    }
+
+    @GetMapping("/dashboard/daemon/logfile")
+    public ResponseEntity<?> getDaemonLogFile(@RequestParam(name = "id") Long daemonId) {
+        DtoMataData dtoMataData;
+        String daemonLog;
+        try {
+            daemonLog = daemonManageService.getDaemonLogById(daemonId);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=temp_daemon_log.txt")
+                    .contentLength(daemonLog.length())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new InputStreamResource(
+                            new ByteArrayInputStream(daemonLog.getBytes(StandardCharsets.UTF_8))
+                    ));
         } catch (Exception e) {
             dtoMataData = new DtoMataData(false, e.getMessage());
             return ResponseEntity.status(400).body(new GetDaemonLogResDto(dtoMataData));

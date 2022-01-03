@@ -62,34 +62,20 @@ function getDaemonLogs(daemonId) {
     });
 }
 
-function requestStartDaemon(daemonId) {
-    jQuery.ajax({
-        url: location.origin + '/dashboard/daemon/start',
-        type: "get",
-        accept: "application/json",
-        contentType: "application/json; charset=utf-8",
-        cache: false,
-        data: JSON.stringify({
-            id: daemonId
-        }),
-        dataType: "json",
-        success: (res) => {
-            console.log(res);
-            alert("데몬을 시작합니다");
-            location.reload();
-        },
-        error: (xhr, error) => {
-            console.log(xhr);
-            $("#daemon-status").text("Unknown");
-            alert(error);
-        }
-    });
+function getDaemonLogFile(daemonId) {
+    window.open(location.origin + '/dashboard/daemon/logfile?id=' + daemonId);
 }
 
 function changeDaemonState(daemonId, state) {
+    const message = {
+        start: "시작",
+        stop: "중지",
+        restart: "재시작"
+    }
     if (state !== "start" || state !== "stop" || state !== "restart") {
         console.error("Invalid daemon state");
     }
+    alert("데몬을 " + message[state] + "합니다");
     jQuery.ajax({
         url: location.origin + '/dashboard/daemon/' + state,
         type: "post",
@@ -102,7 +88,7 @@ function changeDaemonState(daemonId, state) {
         dataType: "json",
         success: (res) => {
             console.log(res);
-            alert("데몬을 시작합니다");
+            alert("데몬을 " + message[state] + "했습니다");
             location.reload();
         },
         error: (xhr, error) => {

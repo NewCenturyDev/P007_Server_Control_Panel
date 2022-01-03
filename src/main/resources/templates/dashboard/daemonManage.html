@@ -29,7 +29,7 @@
                 <button class="button small" type="button" th:onclick="|location.href='@{/dashboard/daemon_editor(id=${daemon.id})}'|">
                     프로젝트 데몬 정보 수정
                 </button>
-                <button class="alert button small" type="button" th:onclick="|deleteDaemon(${daemon.id})|">
+                <button class="alert button small" type="button" onclick="deleteDaemon(daemonId)">
                     프로젝트 데몬 등록 해제
                 </button>
             </div>
@@ -124,7 +124,7 @@
                     <div class="tabs-panel" id="panel3">
                         <label for="daemon-docker-log">데몬 도커 컨테이너 로그</label>
                         <textarea disabled id="daemon-docker-log" type="text">로그를 불러오는 중입니다</textarea>
-                        <button class="button small">컨테이너 로그 다운로드</button>
+                        <button class="button small" onclick="getDaemonLogFile(daemonId)">컨테이너 로그 다운로드</button>
                     </div>
                     <div class="tabs-panel" id="panel4">
                         <fieldset class="fieldset">

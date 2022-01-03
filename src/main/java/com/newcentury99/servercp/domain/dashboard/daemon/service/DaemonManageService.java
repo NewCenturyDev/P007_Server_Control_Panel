@@ -19,7 +19,7 @@ public class DaemonManageService {
         String daemonStatus = sshService.executeSshRemoteCommand(sshCommandScript);
 
         if (daemonStatus.length() == 0) {
-            throw new Exception("temp: failed to get daemon status");
+            daemonStatus = "Not Running";
         }
         return daemonStatus;
     }
@@ -28,7 +28,7 @@ public class DaemonManageService {
         Daemon targetDaemon = daemonCrudService.fetchDaemonById(daemonId);
         String sshCommandScript = String.format("cd %s && docker-compose up -d", targetDaemon.getProjectPath());
 
-        sshService.executeSshRemoteCommand(sshCommandScript);
+        System.out.println(sshService.executeSshRemoteCommand(sshCommandScript));
     }
 
     public void stopDaemon(Long daemonId) throws Exception {
