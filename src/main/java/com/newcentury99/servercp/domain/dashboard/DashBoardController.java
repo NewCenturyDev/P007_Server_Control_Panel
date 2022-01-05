@@ -2,7 +2,6 @@ package com.newcentury99.servercp.domain.dashboard;
 
 import com.newcentury99.servercp.domain.dashboard.daemon.service.DaemonCrudService;
 import com.newcentury99.servercp.domain.dashboard.daemon.dao.Daemon;
-import com.newcentury99.servercp.domain.dashboard.daemon.service.DaemonManageService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,10 +16,8 @@ import java.util.List;
 public class DashBoardController {
     private static final Logger logger = LogManager.getLogger();
     private final DaemonCrudService daemonCrudService;
-    private final DaemonManageService daemonManageService;
 
-
-    @GetMapping("/dashboard")
+    @GetMapping("/")
     public String mainView(Model model) {
         try {
             List<Daemon> daemonList = daemonCrudService.fetchDaemonList();
@@ -32,7 +29,7 @@ public class DashBoardController {
         return "dashboard/daemonList.html";
     }
 
-    @GetMapping("/dashboard/daemon_manage")
+    @GetMapping("/daemon_manage")
     public String daemonManageView(Model model, @RequestParam(name = "id") Long daemonId) {
         try {
             Daemon daemon = daemonCrudService.fetchDaemonById(daemonId);
@@ -44,7 +41,7 @@ public class DashBoardController {
         return "dashboard/daemonManage.html";
     }
 
-    @GetMapping("/dashboard/daemon_editor")
+    @GetMapping("/daemon_editor")
     public String daemonEditorView(Model model, @RequestParam(name = "id", required = false) Long daemonId) {
         try {
             if (daemonId != null) {

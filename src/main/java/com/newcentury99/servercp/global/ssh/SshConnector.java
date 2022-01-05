@@ -12,6 +12,7 @@ public class SshConnector {
     private Integer port;
 
     public Session getSshSession() throws Exception {
+        //TODO: 나중에는 로그인된 회원정보와 연동해서 사용할 것.
         Session session = new JSch().getSession(this.username, this.host, this.port);
         session.setPassword(this.password);
         session.setConfig("StrictHostKeyChecking", "no");

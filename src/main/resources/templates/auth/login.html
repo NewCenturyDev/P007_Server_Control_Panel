@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NewCentury Server Control Panel</title>
+    <link rel="stylesheet" href="/static/css/foundation.css" />
+    <link rel="stylesheet" href="/static/css/dashboard/index.css" />
+</head>
+<body>
+    <div class="title-bar">
+        <div class="title-bar-left">
+            <span class="title-bar-title">NewCentury Server CP</span>
+        </div>
+        <div class="title-bar-right">
+        </div>
+    </div>
+    <div class="grid-container">
+        <div class="grid-x align-center">
+            <div class="cell">
+                <h1 class="text-center custom-daemon-title">NewCentury Server CP</h1>
+                <h3 class="text-center custom-daemon-subtitle">NewCentury 서버 관리자 페이지에 오신 것을 환영합니다!</h3>
+            </div>
+            <div class="card cell small-6 custom-daemon-login">
+                <div class="card-divider">
+                    System Login
+                </div>
+                <div class="card-section">
+                    <form id="login-form">
+                        <div>
+                            <label>Username
+                                <input id="username" type="text" placeholder="Username">
+                            </label>
+                        </div>
+                        <div>
+                            <label>Password
+                                <input id="password" type="password" placeholder="Password">
+                            </label>
+                        </div>
+                        <div>
+                            <button class="button expanded custom-daemon-login-btn" type="button" onclick="login()">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/vendor/jquery.js"></script>
+    <script src="/static/js/vendor/what-input.js"></script>
+    <script src="/static/js/vendor/foundation.min.js"></script>
+    <script src="/static/js/auth/login.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
+</body>
+</html>

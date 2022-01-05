@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:secret.properties")
-public class SshConfiguration {
+public class SshConfig {
     @Value("${ssh.secret.host}")
     private String host;
     @Value("${ssh.secret.username}")

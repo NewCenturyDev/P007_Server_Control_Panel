@@ -6,7 +6,7 @@ function deleteDaemon(daemonId) {
 
 function requestDeleteDaemon(daemonId) {
     jQuery.ajax({
-        url: location.origin + '/dashboard/daemon',
+        url: location.origin + '/daemon',
         type: "delete",
         accept: "application/json",
         contentType: "application/json; charset=utf-8",
@@ -29,7 +29,7 @@ function requestDeleteDaemon(daemonId) {
 
 function getDaemonStatus(daemonId) {
     jQuery.ajax({
-        url: location.origin + '/dashboard/daemon/status?id=' + daemonId,
+        url: location.origin + '/daemon/status?id=' + daemonId,
         type: "get",
         accept: "application/json",
         contentType: "application/json; charset=utf-8",
@@ -56,7 +56,7 @@ function changeDaemonState(daemonId, state) {
     }
     alert("데몬을 " + message[state] + "합니다");
     jQuery.ajax({
-        url: location.origin + '/dashboard/daemon/' + state,
+        url: location.origin + '/daemon/' + state,
         type: "post",
         accept: "application/json",
         contentType: "application/json; charset=utf-8",
@@ -99,7 +99,7 @@ function upgradeDaemon(daemonId) {
     }, 500);
 
     jQuery.ajax({
-        url: location.origin + '/dashboard/daemon/upgrade',
+        url: location.origin + '/daemon/upgrade',
         type: "post",
         processData: false,
         contentType:false,
@@ -119,7 +119,7 @@ function upgradeDaemon(daemonId) {
 
 function getDaemonLogs(daemonId) {
     jQuery.ajax({
-        url: location.origin + '/dashboard/daemon/log?id=' + daemonId,
+        url: location.origin + '/daemon/log?id=' + daemonId,
         type: "get",
         accept: "application/json",
         contentType: "application/json; charset=utf-8",
@@ -135,5 +135,5 @@ function getDaemonLogs(daemonId) {
 }
 
 function getDaemonLogFile(daemonId) {
-    window.open(location.origin + '/dashboard/daemon/logfile?id=' + daemonId);
+    window.open(location.origin + '/daemon/logfile?id=' + daemonId);
 }

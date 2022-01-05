@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import java.sql.SQLException;
 
 @Configuration
-public class H2TcpServerConfiguration {
+public class H2TcpServerConfig {
 
     @Bean
     public Server h2TcpServer() throws SQLException {

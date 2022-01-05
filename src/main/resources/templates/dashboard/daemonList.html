@@ -11,7 +11,7 @@
 <body>
     <div class="title-bar">
         <div class="title-bar-left">
-            <span class="title-bar-title custom-daemon-list-main-title" onclick="location.href = location.origin + '/dashboard'">
+            <span class="title-bar-title custom-daemon-list-main-title" onclick="location.href = location.origin">
                 NewCentury Server CP
             </span>
         </div>
@@ -55,7 +55,7 @@
                             <a target="_blank" rel="noopener noreferrer" th:href="@{${daemon.portfolioUrl}}">소개</a>
                         </td>
                         <td class="text-center">
-                            <a th:href="@{/dashboard/daemon_manage(id=${daemon.id})}">관리</a>
+                            <a th:href="@{/daemon_manage(id=${daemon.id})}">관리</a>
                         </td>
                     </tr>
                     <tr th:if="${daemonListIsEmpty}">
@@ -65,7 +65,7 @@
             </table>
             <div class="cell small-10"></div>
             <button class="button cell small-2" type="button"
-                    th:onclick="|location.href='@{/dashboard/daemon_editor}'|">
+                    th:onclick="|location.href='@{/daemon_editor}'|">
                 신규 프로젝트 데몬 등록
             </button>
         </div>

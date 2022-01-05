@@ -14,7 +14,7 @@ function createDaemon() {
         portfolioUrl: $("#daemon-portfolioUrl").val()
     }
     jQuery.ajax({
-        url: location.origin + '/dashboard/daemon',
+        url: location.origin + '/daemon',
         type: "post",
         accept: "application/json",
         contentType: "application/json; charset=utf-8",
@@ -50,7 +50,7 @@ function updateDaemon(daemonId) {
         portfolioUrl: $("#daemon-portfolioUrl").val()
     }
     jQuery.ajax({
-        url: location.origin + '/dashboard/daemon',
+        url: location.origin + '/daemon',
         type: "put",
         accept: "application/json",
         contentType: "application/json; charset=utf-8",

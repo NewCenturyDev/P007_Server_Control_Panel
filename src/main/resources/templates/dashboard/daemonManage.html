@@ -11,7 +11,7 @@
 <body>
     <div class="title-bar">
         <div class="title-bar-left">
-            <span class="title-bar-title custom-daemon-manage-main-title" onclick="location.href = location.origin + '/dashboard'">
+            <span class="title-bar-title custom-daemon-manage-main-title" onclick="location.href = location.origin">
                 NewCentury Server CP
             </span>
         </div>
@@ -26,7 +26,7 @@
                 <button class="button small" type="button" th:onclick="|window.open('@{${daemon.portfolioUrl}}')|">
                     프로젝트 소개
                 </button>
-                <button class="button small" type="button" th:onclick="|location.href='@{/dashboard/daemon_editor(id=${daemon.id})}'|">
+                <button class="button small" type="button" th:onclick="|location.href='@{/daemon_editor(id=${daemon.id})}'|">
                     프로젝트 데몬 정보 수정
                 </button>
                 <button class="alert button small" type="button" onclick="deleteDaemon(daemonId)">

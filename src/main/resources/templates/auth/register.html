@@ -24,21 +24,29 @@
             </div>
             <div class="card cell small-6 custom-daemon-login">
                 <div class="card-divider">
-                    System Login
+                    System Admin Registration
                 </div>
                 <div class="card-section">
                     <div>
+                        <h5>ServerCP 서버 제어 WebGUI 는 SSH 및 API 연동으로 작동하므로, 해당 host 의 시스템 관리 계정을 입력하셔야 합니다.</h5>
+                    </div>
+                    <div>
+                        <label>Host
+                            <input id="host" type="password" placeholder="현재는 단일 서버만 지원됩니다. 서버 호스트는 프리셋에 따라 자동 입력됩니다." disabled>
+                        </label>
+                    </div>
+                    <div>
                         <label>Username
-                            <input type="text" placeholder="Username">
+                            <input id="username" type="text" placeholder="Username">
                         </label>
                     </div>
                     <div>
                         <label>Password
-                            <input type="text" placeholder="Password">
+                            <input id="password" type="password" placeholder="Password">
                         </label>
                     </div>
                     <div>
-                        <button class="button expanded custom-daemon-login-btn" type="button" onclick="">Login</button>
+                        <button class="button expanded custom-daemon-login-btn" type="button" onclick="register()">Check Server Admin Privilege & Register Server</button>
                     </div>
                 </div>
             </div>
@@ -48,6 +56,7 @@
     <script src="/static/js/vendor/jquery.js"></script>
     <script src="/static/js/vendor/what-input.js"></script>
     <script src="/static/js/vendor/foundation.min.js"></script>
+    <script src="/static/js/auth/register.js"></script>
     <script>
         $(document).foundation();
     </script>

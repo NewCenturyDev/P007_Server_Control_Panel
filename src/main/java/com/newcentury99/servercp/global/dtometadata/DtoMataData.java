@@ -8,4 +8,9 @@ import lombok.Data;
 public class DtoMataData {
     private Boolean status;
     private String message;
+    private String exception;
+    public DtoMataData(Boolean status, String message) {
+        this.status = status;
+        this.message = message;
+    }
 }

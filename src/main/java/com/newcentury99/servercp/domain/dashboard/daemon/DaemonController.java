@@ -22,7 +22,7 @@ public class DaemonController {
     private final DaemonCrudService daemonCrudService;
     private final DaemonManageService daemonManageService;
 
-    @PostMapping("/dashboard/daemon")
+    @PostMapping("/daemon")
     public ResponseEntity<?> createDaemon(@Valid @RequestBody CreateDaemonReqDto reqDto) {
         DtoMataData dtoMataData;
         try {
@@ -34,7 +34,7 @@ public class DaemonController {
             return ResponseEntity.status(400).body(new CreateDaemonResDto(dtoMataData));
         }
     }
-    @PutMapping("/dashboard/daemon")
+    @PutMapping("/daemon")
     public ResponseEntity<?> updateDaemon(@Valid @RequestBody UpdateDaemonReqDto reqDto) {
         DtoMataData dtoMataData;
         try {
@@ -46,7 +46,7 @@ public class DaemonController {
             return ResponseEntity.status(400).body(new UpdateDaemonResDto(dtoMataData));
         }
     }
-    @DeleteMapping("/dashboard/daemon")
+    @DeleteMapping("/daemon")
     public ResponseEntity<?> deleteDaemon(@Valid @RequestBody DeleteDaemonReqDto reqDto) {
         DtoMataData dtoMataData;
         try {
@@ -59,7 +59,7 @@ public class DaemonController {
         }
     }
 
-    @GetMapping("/dashboard/daemon/log")
+    @GetMapping("/daemon/log")
     public ResponseEntity<?> getDaemonLog(@RequestParam(name = "id") Long daemonId) {
         DtoMataData dtoMataData;
         try {
@@ -73,7 +73,7 @@ public class DaemonController {
         }
     }
 
-    @GetMapping("/dashboard/daemon/logfile")
+    @GetMapping("/daemon/logfile")
     public ResponseEntity<?> getDaemonLogFile(@RequestParam(name = "id") Long daemonId) {
         DtoMataData dtoMataData;
         String daemonLog;
@@ -92,7 +92,7 @@ public class DaemonController {
         }
     }
 
-    @GetMapping("/dashboard/daemon/status")
+    @GetMapping("/daemon/status")
     public ResponseEntity<?> getDaemonStatus(@RequestParam(name = "id") Long daemonId) {
         DtoMataData dtoMataData;
         try {
@@ -106,7 +106,7 @@ public class DaemonController {
         }
     }
 
-    @PostMapping("/dashboard/daemon/start")
+    @PostMapping("/daemon/start")
     public ResponseEntity<?> startDaemon(@Valid @RequestBody StartDaemonReqDto reqDto) {
         DtoMataData dtoMataData;
         try {
@@ -119,7 +119,7 @@ public class DaemonController {
         }
     }
 
-    @PostMapping("/dashboard/daemon/stop")
+    @PostMapping("/daemon/stop")
     public ResponseEntity<?> stopDaemon(@Valid @RequestBody StopDaemonReqDto reqDto) {
         DtoMataData dtoMataData;
         try {
@@ -132,7 +132,7 @@ public class DaemonController {
         }
     }
 
-    @PostMapping("/dashboard/daemon/restart")
+    @PostMapping("/daemon/restart")
     public ResponseEntity<?> restartDaemon(@Valid @RequestBody RestartDaemonReqDto reqDto) {
         DtoMataData dtoMataData;
         try {
@@ -145,7 +145,7 @@ public class DaemonController {
         }
     }
 
-    @PostMapping("/dashboard/daemon/upgrade")
+    @PostMapping("/daemon/upgrade")
     public ResponseEntity<?> upgradeDaemon(
             @RequestPart(value = "json")UpgradeDaemonReqDto reqDto,
             @RequestPart(value = "file")MultipartFile uploadedBinaryFile
