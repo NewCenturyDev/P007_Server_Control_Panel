@@ -24,7 +24,7 @@ function createDaemon() {
         success: (res) => {
             console.log(res);
             alert("데몬 등록 성공");
-            location.href = location.origin + '/dashboard';
+            location.href = location.origin;
         },
         error: (xhr, error) => {
             console.log(xhr);
@@ -60,7 +60,7 @@ function updateDaemon(daemonId) {
         success: (res) => {
             console.log(res);
             alert("데몬 수정 성공");
-            location.href = location.origin + '/dashboard';
+            location.href = location.origin;
         },
         error: (xhr, error) => {
             console.log(xhr);

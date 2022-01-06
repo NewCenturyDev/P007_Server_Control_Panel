@@ -18,7 +18,7 @@ function requestDeleteDaemon(daemonId) {
         success: (res) => {
             console.log(res);
             alert("데몬 등록 해제 성공");
-            location.href = location.origin + '/dashboard';
+            location.href = location.origin;
         },
         error: (xhr, error) => {
             console.log(xhr);
