@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  pet_management_backend:
+  backend:
     build: .
     container_name: servercp_backend
     restart: always
