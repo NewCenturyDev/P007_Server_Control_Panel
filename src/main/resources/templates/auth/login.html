@@ -14,6 +14,9 @@
             <span class="title-bar-title">NewCentury Server CP</span>
         </div>
         <div class="title-bar-right">
+            <button class="hollow button tiny" style="margin: 0" onclick="location.href = location.origin + '/register'">
+                신규서버 등록
+            </button>
         </div>
     </div>
     <div class="grid-container">
@@ -27,19 +30,19 @@
                     System Login
                 </div>
                 <div class="card-section">
-                    <form id="login-form">
+                    <form id="login-form" method="post" action="/login/process">
                         <div>
                             <label>Username
-                                <input id="username" type="text" placeholder="Username">
+                                <input id="username" name="username" type="text" placeholder="Username" required autofocus>
                             </label>
                         </div>
                         <div>
                             <label>Password
-                                <input id="password" type="password" placeholder="Password">
+                                <input id="password" name="password" type="password" placeholder="Password" required>
                             </label>
                         </div>
                         <div>
-                            <button class="button expanded custom-daemon-login-btn" type="button" onclick="login()">Login</button>
+                            <button class="button expanded custom-daemon-login-btn" type="submit">Login</button>
                         </div>
                     </form>
                 </div>
@@ -50,7 +53,6 @@
     <script src="/static/js/vendor/jquery.js"></script>
     <script src="/static/js/vendor/what-input.js"></script>
     <script src="/static/js/vendor/foundation.min.js"></script>
-    <script src="/static/js/auth/login.js"></script>
     <script>
         $(document).foundation();
     </script>

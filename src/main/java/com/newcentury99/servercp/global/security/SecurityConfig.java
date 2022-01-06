@@ -25,21 +25,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-            .authorizeRequests()
+        http.csrf().disable();
+        http.authorizeRequests()
                 .antMatchers("/login", "/login/process", "/register").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
-//                .loginPage("/login")
+                .loginPage("/login")
                 .loginProcessingUrl("/login/process")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/", true)
+                .failureUrl("/login?error")
                 .failureForwardUrl("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .permitAll();
         http.logout()
-                .logoutSuccessUrl("/")
-                .deleteCookies("JSESSIONID");
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/");
     }
 
     @Override

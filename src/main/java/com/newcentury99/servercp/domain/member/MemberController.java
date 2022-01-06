@@ -19,6 +19,7 @@ public class MemberController {
     private final MemberCrudService memberCrudService;
 
     @GetMapping("/login")
+    @PostMapping
     public String loginView() {
         return "auth/login.html";
     }

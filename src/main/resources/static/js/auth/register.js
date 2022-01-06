@@ -17,7 +17,7 @@ function register() {
             console.log(res);
         },
         error: (err) => {
-            alert(err);
+            alert(err.responseJSON._metadata.message);
         }
     });
 }
