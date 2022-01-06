@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+  pet_management_backend:
+    build: .
+    container_name: servercp_backend
+    restart: always
+    ports:
+      - "8000:8080"
